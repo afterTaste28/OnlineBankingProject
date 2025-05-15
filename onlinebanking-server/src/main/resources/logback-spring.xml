@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Define a timestamp pattern -->
+    <timestamp key="byDay" datePattern="yyyy-MM-dd"/>
+
+    <!-- Log file for your application logs -->
+    <appender name="APP_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/app-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Log file for Spring framework logs -->
+    <appender name="SPRING_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/spring-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- Spring-specific logger -->
+    <logger name="org.springframework" level="ERROR" additivity="false">
+        <appender-ref ref="SPRING_LOG"/>
+    </logger>
+    <!-- Catch-all ERROR level logger for all other packages -->
+    <logger name="ROOT" level="ERROR" additivity="false">
+        <appender-ref ref="SPRING_LOG"/>
+    </logger>
+
+    <!-- Your application logger -->
+    <logger name="com.aftertaste" level="DEBUG" additivity="false">
+        <appender-ref ref="APP_LOG"/>
+    </logger>
+
+
+    <!-- Root logger (optional, can go to console or both) -->
+    <root level="DEBUG">
+        <appender-ref ref="APP_LOG"/>
+    </root>
+
+
+</configuration>
