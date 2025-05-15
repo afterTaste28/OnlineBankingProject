@@ -1,4 +1,4 @@
-import { Tabs, Tab, Box, Typography } from '@mui/material';
+import { Tabs, Tab, Box } from '@mui/material';
 import {useNavigate, useLocation} from 'react-router-dom';
 
 function TabsComponent(){
