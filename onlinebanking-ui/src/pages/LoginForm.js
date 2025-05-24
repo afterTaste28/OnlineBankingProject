@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { TextField, Button, Box, Typography, Container } from "@mui/material";
-import { login } from "../api/Auth";
+import { getHashedPassword,login } from "../api/Auth";
 
 
 function LoginForm(){
@@ -14,11 +14,12 @@ function LoginForm(){
         e.preventDefault();
 
         try{
+            form.password = await getHashedPassword(form.password);
             const resp = await login(form);
-            localStorage.setItem("token", resp.data.token);
+            localStorage.setItem("token", resp.data);
             alert("Login successful");
         } catch(err){
-            alert("Login failed!",err);
+            alert("Login failed:"+err.response.data.errorString);
         }
     }
     return (

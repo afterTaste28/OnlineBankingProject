@@ -31,21 +31,11 @@
     <logger name="org.springframework" level="ERROR" additivity="false">
         <appender-ref ref="SPRING_LOG"/>
     </logger>
-    <!-- Catch-all ERROR level logger for all other packages -->
-    <logger name="ROOT" level="ERROR" additivity="false">
-        <appender-ref ref="SPRING_LOG"/>
-    </logger>
 
     <!-- Your application logger -->
-    <logger name="com.aftertaste" level="DEBUG" additivity="false">
+    <logger name="com.aftertaste" level="ERROR" additivity="false">
         <appender-ref ref="APP_LOG"/>
     </logger>
-
-
-    <!-- Root logger (optional, can go to console or both) -->
-    <root level="DEBUG">
-        <appender-ref ref="APP_LOG"/>
-    </root>
 
 
 </configuration>

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { TextField, Button, Box, Typography, Container } from "@mui/material";
-import { register } from "../api/Auth";
+import { getHashedPassword, register } from "../api/Auth";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -15,6 +15,7 @@ function RegisterForm(){
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
+            form.password = await getHashedPassword(form.password);
             const resp = await register(form);
             alert("Register Successful");
             navigate('/login');

@@ -8,11 +8,11 @@ public class LoginRequest {
     private String emailId;
     private String password;
 
-    public String getEmail() {
+    public String getEmailId() {
         return emailId;
     }
 
-    public void setEmail(String emailId) {
+    public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
 
