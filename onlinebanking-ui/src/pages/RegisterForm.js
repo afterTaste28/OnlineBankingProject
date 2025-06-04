@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { TextField, Button, Box, Typography, Container } from "@mui/material";
-import { getHashedPassword, register } from "../api/Auth";
+import { getHashedPassword, register } from "../api/APIRegistry";
 import { useNavigate } from 'react-router-dom';
 
 

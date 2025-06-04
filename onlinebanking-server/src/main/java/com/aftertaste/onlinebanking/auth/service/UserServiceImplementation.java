@@ -1,5 +1,6 @@
 package com.aftertaste.onlinebanking.auth.service;
 
+import com.aftertaste.onlinebanking.account.service.AccountService;
 import com.aftertaste.onlinebanking.auth.dto.LoginRequest;
 import com.aftertaste.onlinebanking.auth.dto.RegisterRequest;
 import com.aftertaste.onlinebanking.auth.entity.Role;
@@ -8,6 +9,8 @@ import com.aftertaste.onlinebanking.auth.repository.UserRepository;
 import com.aftertaste.onlinebanking.common.exception.ApiException;
 import com.aftertaste.onlinebanking.common.exception.ErrorCode;
 import com.aftertaste.onlinebanking.config.JwtService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,17 +24,20 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-@Slf4j
 @Service
 public class UserServiceImplementation implements UserService {
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImplementation.class);
+
     private final UserRepository userRepository;
+    private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final ApplicationUserDetailsService applicationUserDetailsService;
 
     @Autowired
-    public UserServiceImplementation(UserRepository userRepository,PasswordEncoder passwordEncoder,JwtService jwtService, ApplicationUserDetailsService applicationUserDetailsService){
+    public UserServiceImplementation(UserRepository userRepository,AccountService accountService,PasswordEncoder passwordEncoder,JwtService jwtService, ApplicationUserDetailsService applicationUserDetailsService){
         this.userRepository = userRepository;
+        this.accountService = accountService;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.applicationUserDetailsService = applicationUserDetailsService;
@@ -41,11 +47,14 @@ public class UserServiceImplementation implements UserService {
         User user = dtoToUserBean(registerRequestDTO);
         try{
             userRepository.save(user);
-            log.info("User "+user.getEmailId()+" registered.");
+            logger.info("User {} registered.", user.getEmailId());
+
+            accountService.createAccount(user);
+            logger.info("Created account for user: {}", user.getEmailId());
         } catch(DataIntegrityViolationException e){
             throw new ApiException(ErrorCode.EMAIL_ALREADY_EXISTS,"Email-ID already exists:"+user.getEmailId());
         } catch (Exception e){
-            log.error(e.getMessage());
+            logger.error(e.getMessage());
             throw new ApiException(ErrorCode.SYSTEM_EXCEPTION,"Failed while registering User!");
         }
     }

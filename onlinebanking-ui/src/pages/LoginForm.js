@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import { TextField, Button, Box, Typography, Container } from "@mui/material";
-import { getHashedPassword,login } from "../api/Auth";
+import { getHashedPassword,login } from "../api/APIRegistry";
+import { useNavigate } from "react-router-dom";
 
 
 function LoginForm(){
+    const navigate = useNavigate();
     const [form, setForm] = useState({emailId:"",password:""});
     
     const handleChange = (e)=>{
@@ -18,6 +20,7 @@ function LoginForm(){
             const resp = await login(form);
             localStorage.setItem("token", resp.data);
             alert("Login successful");
+            navigate('/dashboard');
         } catch(err){
             alert("Login failed:"+err.response.data.errorString);
         }
