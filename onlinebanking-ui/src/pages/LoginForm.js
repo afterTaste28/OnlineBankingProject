@@ -1,13 +1,14 @@
-import React, {useState} from "react";
+import React, {useState,useContext} from "react";
 import { TextField, Button, Box, Typography, Container } from "@mui/material";
 import { getHashedPassword,login } from "../api/APIRegistry";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserProvider";
 
 
 function LoginForm(){
     const navigate = useNavigate();
     const [form, setForm] = useState({emailId:"",password:""});
-    
+    const {setIsLoggedIn} = useContext(UserContext);
     const handleChange = (e)=>{
         setForm({...form, [e.target.name]:e.target.value})
     }
@@ -20,6 +21,7 @@ function LoginForm(){
             const resp = await login(form);
             localStorage.setItem("token", resp.data);
             alert("Login successful");
+            setIsLoggedIn(true);
             navigate('/dashboard');
         } catch(err){
             alert("Login failed:"+err.response.data.errorString);

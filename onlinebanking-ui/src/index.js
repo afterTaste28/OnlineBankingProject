@@ -2,19 +2,53 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
+import UserProvider from './context/UserProvider';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#0D47A1',
+      light: '#5472d3',
+    },
+    secondary: {
+      main: '#00ACC1',
+    },
+    success: {
+      main: '#2E7D32',
+    },
+    warning: {
+      main: '#FBC02D',
+    },
+    error: {
+      main: '#C62828',
+    },
+    background: {
+      default: '#f4f6f8',
+      paper: '#ffffff',
+    },
+    text: {
+      primary: '#212121',
+      secondary: '#616161',
+    },
+  },
+});
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <CssBaseline>
+        <BrowserRouter>
+        <UserProvider>
+          <App />
+          </UserProvider>
+        </BrowserRouter>
+      </CssBaseline>
+    </ThemeProvider>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

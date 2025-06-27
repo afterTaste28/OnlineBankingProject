@@ -43,7 +43,7 @@ body {
   font-family: sans-serif;
   position: relative;
 }
-body::before {
+/* body::before {
   content: "";
   position: fixed;
   top: 0;
@@ -51,9 +51,9 @@ body::before {
   height: 100%;
   width: 100%;
   background: url('./resources/OnlineBanking.jpg') no-repeat center center/cover;
-  opacity: 0.9; /* Adjust the opacity here */
-  z-index: -1; /* Put it behind everything */
-}
+  opacity: 0.9; 
+  z-index: -1; 
+} */
 
 .custom-container  {
   background-color: #f1ecec;  /* light grey */

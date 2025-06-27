@@ -1,7 +1,9 @@
 package com.aftertaste.onlinebanking.account.service;
 
 import com.aftertaste.onlinebanking.account.entity.Account;
+import com.aftertaste.onlinebanking.account.entity.Card;
 import com.aftertaste.onlinebanking.account.repository.AccountRepository;
+import com.aftertaste.onlinebanking.account.utils.CardGenerator;
 import com.aftertaste.onlinebanking.auth.entity.User;
 import com.aftertaste.onlinebanking.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -33,6 +36,8 @@ public class AccountService {
     public void createAccount(User user){
         String accountNumber = generateAccountNumber();
         Account account = new Account(accountNumber,BigDecimal.ZERO,user);
+        Card card = CardGenerator.generateCard(account);
+        account.getCardDetails().add(card);
         accountRepository.save(account);
     }
 
