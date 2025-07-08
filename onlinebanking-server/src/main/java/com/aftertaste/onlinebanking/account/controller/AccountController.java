@@ -1,5 +1,7 @@
 package com.aftertaste.onlinebanking.account.controller;
 
+import com.aftertaste.onlinebanking.account.dto.CardInfoDTO;
+import com.aftertaste.onlinebanking.account.entity.Card;
 import com.aftertaste.onlinebanking.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
@@ -24,6 +26,12 @@ public class AccountController {
     public BigDecimal getBalance(Authentication authentication){
         String emailId = authentication.getName();
         return accountService.getBalance(emailId);
+    }
+
+    @GetMapping("/cardDetails")
+    public CardInfoDTO getCardDetails(Authentication authentication){
+        String emailId = authentication.getName();
+        return accountService.getCardDetails(emailId);
     }
 }
 

@@ -16,6 +16,16 @@ public class Card {
     private Account account;
     private String cardNumber;
 
+    public String getCardHolderName() {
+        return cardHolderName;
+    }
+
+    public void setCardHolderName(String cardHolderName) {
+        this.cardHolderName = cardHolderName;
+    }
+
+    private String cardHolderName;
+
     private LocalDate expiryDate;
     private String cardMatrix;
 

@@ -3,6 +3,7 @@ package com.aftertaste.onlinebanking.auth.service;
 import com.aftertaste.onlinebanking.account.service.AccountService;
 import com.aftertaste.onlinebanking.auth.dto.LoginRequest;
 import com.aftertaste.onlinebanking.auth.dto.RegisterRequest;
+import com.aftertaste.onlinebanking.auth.dto.UserInfoDTO;
 import com.aftertaste.onlinebanking.auth.entity.Role;
 import com.aftertaste.onlinebanking.auth.entity.User;
 import com.aftertaste.onlinebanking.auth.repository.UserRepository;
@@ -82,6 +83,13 @@ public class UserServiceImplementation implements UserService {
                 );
         user.setRole(Role.USER);
         return user;
+    }
+
+    @Override
+    public UserInfoDTO getUserInfo(String emailId){
+        User user = userRepository.findByEmailId(emailId)
+                .orElseThrow(() -> new UsernameNotFoundException("No user present by email:"+emailId));
+        return new UserInfoDTO(user);
     }
 
 }

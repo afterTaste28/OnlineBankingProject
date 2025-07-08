@@ -1,10 +1,12 @@
 package com.aftertaste.onlinebanking.transaction.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
 public class Transaction {
 
@@ -19,6 +21,7 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private TransactionStatus transactionStatus;
     private String description;
+    private String transactionStatusMessage;
 
 
 }

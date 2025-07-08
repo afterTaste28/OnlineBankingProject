@@ -2,6 +2,7 @@ package com.aftertaste.onlinebanking.account.utils;
 
 import com.aftertaste.onlinebanking.account.entity.Account;
 import com.aftertaste.onlinebanking.account.entity.Card;
+import com.aftertaste.onlinebanking.auth.entity.User;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -11,11 +12,12 @@ import java.util.Set;
 
 public class CardGenerator {
 
-    public static Card generateCard(Account account){
+    public static Card generateCard(Account account, User user){
         Card card = new Card();
         card.setAccount(account);
         card.setExpiryDate(generateExpiryDate());
         card.setCardNumber(generateRandomCardNumber());
+        card.setCardHolderName(user.getFirstName() + " " + user.getLastName());
         card.setCardMatrix(generateCardMatrix());
         return card;
     }
