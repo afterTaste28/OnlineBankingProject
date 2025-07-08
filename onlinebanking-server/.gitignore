@@ -36,3 +36,5 @@ logs/
 mvnw
 mvnw.cmd
 .mvn/
+/data/banking-db.mv.db
+/data/banking-db.trace.db
